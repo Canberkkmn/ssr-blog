@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import "./globals.css";
 
 export const metadata = {
@@ -16,14 +18,14 @@ export default function RootLayout({ children }) {
             <nav>
               <ul className="flex space-x-4">
                 <li>
-                  <a href="/" className="hover:text-gray-300">
+                  <Link href="/" className="hover:text-gray-300">
                     Home
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="/blogs" className="hover:text-gray-300">
+                  <Link href="/blogs" className="hover:text-gray-300">
                     Blogs
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </nav>
