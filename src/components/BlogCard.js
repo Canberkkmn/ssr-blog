@@ -1,6 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 
+/**
+ * BlogCard component is a server component
+ * Gets post data as prop 
+ */
 export default function BlogCard({ post }) {
   return (
     <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">

@@ -1,9 +1,16 @@
+import Link from "next/link";
+
 export default function Loading() {
   return (
-    <div className="max-w-4xl mx-auto">
-      <div className="h-6 w-40 bg-gray-200 rounded mb-6 animate-pulse"></div>
+    <div className="max-w-4xl mx-auto ">
+      <Link
+        href="/blogs"
+        className="inline-block mb-6 text-blue-500 hover:text-blue-700"
+      >
+        ← Return to Blog List
+      </Link>
 
-      <div className="bg-white p-6 rounded-lg shadow-md">
+      <div className="bg-white p-6 rounded-lg shadow-md min-h-320">
         <div className="h-10 bg-gray-200 rounded w-3/4 mb-4 animate-pulse"></div>
 
         <div className="mb-6">

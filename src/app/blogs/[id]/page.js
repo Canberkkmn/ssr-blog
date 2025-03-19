@@ -23,12 +23,12 @@ export async function generateMetadata({ params }) {
 
   return {
     title: post.title,
-    description: post.body.slice(0, 160),
+    description: post.body?.slice(0, 160),
     openGraph: {
       title: post.title,
-      description: post.body.slice(0, 160),
+      description: post.body?.slice(0, 160),
       type: "article",
-      authors: [post.author.name],
+      authors: [post.author?.name],
     },
   };
 }
@@ -37,7 +37,7 @@ export default async function BlogPost({ params }) {
   const { id } = await params;
   const post = await getPostById(id);
 
-  if (!post) {
+  if (!post || post.comments.length === 0 || !post.author) {
     return (
       <div className="max-w-4xl mx-auto text-center py-12">
         <h1 className="text-3xl font-bold mb-4">Blog could not be found</h1>

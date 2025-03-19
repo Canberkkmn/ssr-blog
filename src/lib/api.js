@@ -1,35 +1,59 @@
-import axios from "axios";
-
 const API_URL = "https://jsonplaceholder.typicode.com";
 
 export async function getPosts() {
   try {
-    const response = await axios.get(`${API_URL}/posts`);
-    
-    return response.data.slice(0, 12);
+    const res = await fetch(`${API_URL}/posts`)
+      .then((res) => res.json())
+      .catch((error) => console.error(error, "Error fetching posts"));
+
+    return res;
   } catch (error) {
     console.error(error, "Error getPosts");
+
     return [];
   }
 }
 
 export async function getPostById(id) {
-  try {
-    const response = await axios.get(`${API_URL}/posts/${id}`);
+  return Promise.all([
+    fetch(`${API_URL}/posts/${id}`, {
+      next: { revalidate: 60 },
+    })
+      .then((res) => res.json())
+      .catch((error) => {
+        console.error("Error fetching post data:", error);
 
-    const userResponse = await axios.get(
-      `${API_URL}/users/${response.data.userId}`
-    );
+        return null;
+      }),
+    fetch(`${API_URL}/users/${id}`, {
+      next: { revalidate: 60 },
+    })
+      .then((res) => res.json())
+      .catch((error) => {
+        console.error("Error fetching user data:", error);
 
-    const commentsResponse = await axios.get(`${API_URL}/posts/${id}/comments`);
+        return null;
+      }),
+    fetch(`${API_URL}/posts/${id}/comments`, {
+      next: { revalidate: 60 },
+    })
+      .then((res) => res.json())
+      .catch((error) => {
+        console.error("Error fetching comments data:", error);
 
-    return {
-      ...response.data,
-      author: userResponse.data,
-      comments: commentsResponse.data,
-    };
-  } catch (error) {
-    console.error(error, "Error getPostById");
-    return null;
-  }
+        return null;
+      }),
+  ])
+    .then(([postData, userData, commentsData]) => {
+      return {
+        ...postData,
+        author: userData,
+        comments: commentsData,
+      };
+    })
+    .catch((error) => {
+      console.error("Error getPostById:", error);
+
+      return null;
+    });
 }
