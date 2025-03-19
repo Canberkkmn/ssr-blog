@@ -7,7 +7,7 @@ export const metadata = {
     title: "About Us - SSR Blog",
     description: "Discover our blog's story, mission, and the team behind it.",
     type: "website",
-    url: "https://yourdomain.com/about",
+    url: "http://localhost:3000/about",
   },
 };
 
