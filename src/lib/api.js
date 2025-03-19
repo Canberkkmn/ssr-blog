@@ -2,7 +2,9 @@ const API_URL = "https://jsonplaceholder.typicode.com";
 
 export async function getPosts() {
   try {
-    const res = await fetch(`${API_URL}/posts`)
+    const res = await fetch(`${API_URL}/posts`, {
+      cache: "no-store",
+    })
       .then((res) => res.json())
       .catch((error) => console.error(error, "Error fetching posts"));
 
@@ -17,7 +19,7 @@ export async function getPosts() {
 export async function getPostById(id) {
   return Promise.all([
     fetch(`${API_URL}/posts/${id}`, {
-      next: { revalidate: 60 },
+      cache: "no-store",
     })
       .then((res) => res.json())
       .catch((error) => {
@@ -26,7 +28,7 @@ export async function getPostById(id) {
         return null;
       }),
     fetch(`${API_URL}/users/${id}`, {
-      next: { revalidate: 60 },
+      cache: "no-store",
     })
       .then((res) => res.json())
       .catch((error) => {
@@ -35,7 +37,7 @@ export async function getPostById(id) {
         return null;
       }),
     fetch(`${API_URL}/posts/${id}/comments`, {
-      next: { revalidate: 60 },
+      cache: "no-store",
     })
       .then((res) => res.json())
       .catch((error) => {

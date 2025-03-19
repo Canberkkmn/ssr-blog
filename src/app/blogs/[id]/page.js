@@ -1,14 +1,8 @@
-import { getPostById, getPosts } from "../../../lib/api";
+import { getPostById } from "../../../lib/api";
 import Link from "next/link";
 import LikeButton from "../../../components/LikeButton";
 
-export async function generateStaticParams() {
-  const posts = await getPosts();
-
-  return posts.map((post) => ({
-    id: post.id.toString(),
-  }));
-}
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }) {
   const { id } = await params;

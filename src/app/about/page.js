@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export const metadata = {
   title: "About Us - SSR Blog",
   description: "Learn more about our blog and mission.",
@@ -40,12 +42,12 @@ export default function AboutPage() {
       </div>
 
       <div className="mt-8 text-center">
-        <a
+        <Link
           href="/blogs"
           className="inline-block bg-blue-500 text-white px-6 py-3 rounded-lg text-lg font-medium hover:bg-blue-600 transition"
         >
           Explore Our Blog
-        </a>
+        </Link>
       </div>
     </div>
   );
